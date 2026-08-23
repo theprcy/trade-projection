@@ -1,7 +1,6 @@
 // ---- Configuration ----
-// Get a free API key at https://twelvedata.com/ (no card required)
-// then paste it below. This key is visible in your public site's source —
-// fine for a personal/demo project, but never use a paid or sensitive key here.
+// API key is injected at deploy time by GitHub Actions.
+// Store your real key in GitHub Secrets as TWELVE_DATA_API_KEY — never paste it here.
 const API_KEY = "YOUR_TWELVE_DATA_API_KEY";
 const MA_WINDOW = 50;
 const HISTORY_SIZE = 60; // fetch a few extra days beyond the MA window
@@ -58,10 +57,6 @@ async function lookup(symbol) {
 }
 
 async function fetchHistoricalCloses(symbol) {
-  if (API_KEY === "YOUR_TWELVE_DATA_API_KEY") {
-    throw new Error("Add your Twelve Data API key in script.js before using this.");
-  }
-
   const url = `https://api.twelvedata.com/time_series?symbol=${encodeURIComponent(symbol)}&interval=1day&outputsize=${HISTORY_SIZE}&apikey=${API_KEY}`;
   const res = await fetch(url);
   const data = await res.json();
