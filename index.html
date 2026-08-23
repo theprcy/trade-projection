@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Signal — moving average buy/sell reader</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&family=Inter:wght@400;500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="scan"></div>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <span class="brand">SIGNAL</span>
+    <span class="brand-sub">50-day moving average reader</span>
+  </div>
+</header>
+
+<main>
+  <section class="console">
+    <p class="console-label">enter a ticker</p>
+    <form id="lookup-form" class="lookup-form" autocomplete="off">
+      <input
+        id="ticker-input"
+        class="ticker-input"
+        type="text"
+        placeholder="AAPL"
+        maxlength="10"
+        spellcheck="false"
+      >
+      <button type="submit" class="lookup-btn">Read signal</button>
+    </form>
+    <p id="status-line" class="status-line"></p>
+  </section>
+
+  <section id="readout" class="readout hidden">
+    <div class="readout-grid">
+      <div class="readout-cell">
+        <span class="cell-label">symbol</span>
+        <span id="out-symbol" class="cell-value mono">—</span>
+      </div>
+      <div class="readout-cell">
+        <span class="cell-label">last close</span>
+        <span id="out-close" class="cell-value mono">—</span>
+      </div>
+      <div class="readout-cell">
+        <span class="cell-label">50-day MA</span>
+        <span id="out-ma" class="cell-value mono">—</span>
+      </div>
+      <div class="readout-cell">
+        <span class="cell-label">as of</span>
+        <span id="out-date" class="cell-value mono">—</span>
+      </div>
+    </div>
+
+    <div id="signal-flag" class="signal-flag">
+      <span id="signal-word" class="signal-word">—</span>
+      <span id="signal-note" class="signal-note"></span>
+    </div>
+
+    <div class="chart-wrap">
+      <canvas id="price-chart" height="260"></canvas>
+    </div>
+  </section>
+
+  <section class="explainer">
+    <p class="explainer-title">how this reads the market</p>
+    <p class="explainer-body">
+      Signal pulls the last 60 daily closes for the ticker you enter and averages the most recent 50.
+      If the closing price sits above that average, the trend reads <span class="tag tag-buy">BUY</span>.
+      If it sits below, the trend reads <span class="tag tag-sell">SELL</span>.
+      This is a single, simple technical rule — not financial advice, and not a substitute for your own research.
+    </p>
+  </section>
+</main>
+
+<footer class="footer">
+  <p>Data via Twelve Data. Built with a 50-day SMA crossover rule.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

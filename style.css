@@ -1,0 +1,268 @@
+:root {
+    --bg: #000000;
+    --surface: #150a10;
+    --surface-2: #1d0e16;
+    --border: #3a1526;
+    --text-primary: #ffd5eb;
+    --text-secondary: #ffbadc;
+    --text-muted: #a85c81;
+    --buy: #f27fb7;
+    --buy-dim: #3a1729;
+    --sell: #d74894;
+    --sell-dim: #33101f;
+    --amber: #ffbadc;
+    --font-display: "Space Grotesk", sans-serif;
+    --font-body: "Inter", sans-serif;
+    --font-mono: "IBM Plex Mono", monospace;
+  }
+  
+  * { box-sizing: border-box; }
+  
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+  }
+  
+  /* subtle ambient scanline, signature texture */
+  .scan {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(242, 127, 183, 0.03) 0px,
+      rgba(242, 127, 183, 0.03) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+  }
+  
+  .topbar {
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    z-index: 1;
+  }
+  
+  .topbar-inner {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px 24px;
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+  
+  .brand {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: 0.08em;
+    color: var(--buy);
+  }
+  
+  .brand-sub {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  
+  main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 48px 24px 24px;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .console-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin: 0 0 10px;
+    letter-spacing: 0.04em;
+  }
+  
+  .lookup-form {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .ticker-input {
+    flex: 1;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+    font-size: 20px;
+    letter-spacing: 0.06em;
+    padding: 14px 16px;
+    text-transform: uppercase;
+    outline: none;
+    transition: border-color 0.15s ease;
+  }
+  
+  .ticker-input::placeholder {
+    color: var(--text-muted);
+  }
+  
+  .ticker-input:focus {
+    border-color: var(--buy);
+  }
+  
+  .lookup-btn {
+    background: var(--buy);
+    color: #06120d;
+    border: none;
+    border-radius: 6px;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 14px;
+    padding: 0 22px;
+    cursor: pointer;
+    transition: opacity 0.15s ease;
+  }
+  
+  .lookup-btn:hover { opacity: 0.85; }
+  .lookup-btn:focus-visible { outline: 2px solid var(--buy); outline-offset: 2px; }
+  
+  .status-line {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-muted);
+    min-height: 18px;
+    margin: 10px 2px 0;
+  }
+  
+  .status-line.error { color: var(--sell); }
+  
+  .readout {
+    margin-top: 36px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--surface);
+    padding: 24px;
+  }
+  
+  .readout.hidden { display: none; }
+  
+  .readout-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  
+  .readout-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  
+  .cell-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+  }
+  
+  .cell-value {
+    font-size: 16px;
+    color: var(--text-primary);
+  }
+  
+  .mono { font-family: var(--font-mono); }
+  
+  .signal-flag {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    padding: 22px 4px 18px;
+  }
+  
+  .signal-word {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 34px;
+    letter-spacing: 0.04em;
+  }
+  
+  .signal-word.buy { color: var(--buy); }
+  .signal-word.sell { color: var(--sell); }
+  
+  .signal-note {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+  
+  .chart-wrap {
+    margin-top: 4px;
+  }
+  
+  .explainer {
+    margin-top: 40px;
+    padding: 20px 2px 0;
+    border-top: 1px solid var(--border);
+  }
+  
+  .explainer-title {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+    margin: 0 0 10px;
+  }
+  
+  .explainer-body {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    margin: 0;
+  }
+  
+  .tag {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+  
+  .tag-buy { color: var(--buy); background: var(--buy-dim); }
+  .tag-sell { color: var(--sell); background: var(--sell-dim); }
+  
+  .footer {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 24px 24px 40px;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .footer p {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    margin: 0;
+  }
+  
+  @media (max-width: 560px) {
+    .readout-grid { grid-template-columns: repeat(2, 1fr); }
+    .signal-word { font-size: 28px; }
+  }
+  
+  @media (max-width: 380px) {
+    .lookup-form { flex-direction: column; }
+    .lookup-btn { padding: 14px 22px; }
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
